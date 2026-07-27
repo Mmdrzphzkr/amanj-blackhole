@@ -6,10 +6,11 @@ import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 import BlackHoleBackground from "./BlackHoleBackground";
 import ParticleField from "./ParticleField";
+import InnerStarField from "./InnerStarField";
 
 function CameraRig({ scrollProgress }: { scrollProgress: number }) {
   const { camera } = useThree();
-  const target = useRef(new THREE.Vector3(0, 0, 10));
+  const target = useRef(new THREE.Vector3(0, 4, 20));
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
@@ -17,9 +18,11 @@ function CameraRig({ scrollProgress }: { scrollProgress: number }) {
     const swayX = Math.sin(t * 0.15) * 0.3;
     const swayY = Math.cos(t * 0.1) * 0.2;
 
-    const targetZ = 10 - scrollProgress * 6;
+    // z: 20 → 0.5  (far away → inside the event horizon)
+    // y: 4  → 0     (elevated → at center)
+    const targetZ = 20 - scrollProgress * 19.5;
+    const targetY = 4 + swayY - scrollProgress * 4;
     const targetX = swayX + scrollProgress * 1.2;
-    const targetY = swayY + scrollProgress * -0.3;
 
     target.current.set(targetX, targetY, targetZ);
 
@@ -31,13 +34,15 @@ function CameraRig({ scrollProgress }: { scrollProgress: number }) {
 }
 
 function PostFX({ scrollProgress }: { scrollProgress: number }) {
+  // Reduce bloom when inside the black hole (no bright sources)
+  const insideFade = THREE.MathUtils.smoothstep(scrollProgress, 0.6, 0.85);
+
   return (
     <EffectComposer multisampling={0}>
       <Bloom
-        intensity={0.4 + scrollProgress * 0.4}
-        luminanceThreshold={0.5}
+        intensity={(0.8 + scrollProgress * 0.3) * (1.0 - insideFade)}
+        luminanceThreshold={0.2}
         luminanceSmoothing={0.9}
-        blendFunction={BlendFunction.ADD}
       />
       <Vignette
         offset={0.3}
@@ -45,6 +50,20 @@ function PostFX({ scrollProgress }: { scrollProgress: number }) {
         blendFunction={BlendFunction.NORMAL}
       />
     </EffectComposer>
+  );
+}
+
+function SceneContents({ scrollProgress }: { scrollProgress: number }) {
+  return (
+    <>
+      <CameraRig scrollProgress={scrollProgress} />
+      <Suspense fallback={null}>
+        <BlackHoleBackground scrollProgress={scrollProgress} />
+        <ParticleField count={600} />
+        <InnerStarField scrollProgress={scrollProgress} />
+      </Suspense>
+      <PostFX scrollProgress={scrollProgress} />
+    </>
   );
 }
 
@@ -61,7 +80,7 @@ export default function Scene({ scrollProgress }: { scrollProgress: number }) {
       }}
     >
       <Canvas
-        camera={{ position: [0, 0, 10], fov: 60, near: 0.1, far: 1000 }}
+        camera={{ position: [0, 4, 20], fov: 60, near: 0.1, far: 1000 }}
         dpr={[1, 1.5]}
         gl={{
           antialias: true,
@@ -74,14 +93,7 @@ export default function Scene({ scrollProgress }: { scrollProgress: number }) {
       >
         <color attach="background" args={["#000005"]} />
 
-        <CameraRig scrollProgress={scrollProgress} />
-
-        <Suspense fallback={null}>
-          <BlackHoleBackground />
-          <ParticleField count={600} />
-        </Suspense>
-
-        <PostFX scrollProgress={scrollProgress} />
+        <SceneContents scrollProgress={scrollProgress} />
       </Canvas>
     </div>
   );

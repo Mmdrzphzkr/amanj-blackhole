@@ -18,6 +18,8 @@ const fragmentShader = `
   uniform vec3 uCamPos;
   uniform vec3 uCamTarget;
   uniform vec2 uResolution;
+  uniform float uFov;
+  uniform float uScrollProgress;
 
   varying vec2 vUv;
 
@@ -71,21 +73,26 @@ const fragmentShader = `
     return value;
   }
 
-  // --- Blackbody color approximation ---
+  // --- Blackbody color (5-stop approximation matching CIE data) ---
   vec3 blackbodyColor(float tempK) {
     float t = clamp(tempK, 1000.0, 40000.0);
-    float tn = (t - 1000.0) / 39000.0;
+    vec3 c1 = vec3(1.0, 0.03, 0.0);
+    vec3 c2 = vec3(1.0, 0.38, 0.06);
+    vec3 c3 = vec3(1.0, 0.85, 0.60);
+    vec3 c4 = vec3(1.0, 0.94, 0.96);
+    vec3 c5 = vec3(0.65, 0.72, 1.0);
 
-    // Approximate blackbody: deep red -> orange -> white -> blue-white
-    vec3 low = vec3(1.0, 0.15, 0.0);
-    vec3 mid = vec3(1.0, 0.85, 0.6);
-    vec3 high = vec3(0.65, 0.72, 1.0);
+    float n = (t - 1000.0) / 39000.0;
 
     vec3 col;
-    if (tn < 0.5) {
-      col = mix(low, mid, tn * 2.0);
+    if (n < 0.04) {
+      col = mix(c1, c2, n / 0.04);
+    } else if (n < 0.12) {
+      col = mix(c2, c3, (n - 0.04) / 0.08);
+    } else if (n < 0.15) {
+      col = mix(c3, c4, (n - 0.12) / 0.03);
     } else {
-      col = mix(mid, high, (tn - 0.5) * 2.0);
+      col = mix(c4, c5, clamp((n - 0.15) / 0.85, 0.0, 1.0));
     }
     return col;
   }
@@ -138,27 +145,24 @@ const fragmentShader = `
                            float rotSpeed, float brightness) {
     float normR = clamp((hitR - innerR) / (outerR - innerR), 0.0, 1.0);
 
-    // Doppler beaming — computed first so it can shift color temperature too
     float rotSign = sign(rotSpeed);
     vec3 velocityDir = vec3(-sin(hitAngle) * rotSign, 0.0, cos(hitAngle) * rotSign);
     float velocityMag = 1.0 / sqrt(hitR / innerR);
-    float beta = velocityMag * 0.3;
+    float beta = velocityMag * 0.35;
     float cosTheta = dot(velocityDir, rayDir);
     float dopplerFactor = 1.0 / (1.0 - beta * cosTheta);
-    float dopplerBoost = pow(abs(dopplerFactor), 3.0 * 0.8);
-    
-    // Temperature profile: T = T_peak * (r_inner / r)^0.75, blue-shifted on the
-    // approaching side and red-shifted on the receding side (relativistic Doppler)
+    float dopplerBoost = pow(abs(dopplerFactor), 3.0);
+
     float peakTempK = diskTemp * 1000.0;
     float tempK = peakTempK * pow(innerR / hitR, 0.75)
-                * mix(0.7, 1.6, clamp(dopplerFactor * 0.5, 0.0, 1.0));
+                * mix(0.6, 1.8, clamp(dopplerFactor * 0.5, 0.0, 1.0));
     vec3 diskColor = blackbodyColor(tempK);
-    diskColor *= clamp(dopplerBoost, 0.15, 6.0);
+    diskColor *= clamp(dopplerBoost, 0.12, 8.0);
 
-    // Edge falloff
-    float edgeFalloff = smoothstep(0.0, 0.15, normR) * smoothstep(1.0, 0.85, normR);
+    float innerFalloff = smoothstep(0.0, 0.08, normR);
+    float outerFalloff = smoothstep(1.0, 0.82, normR);
+    float edgeFalloff = innerFalloff * outerFalloff;
 
-    // Turbulence with cyclic time
     float cycleLen = 12.0;
     float cyclicTime = mod(time, cycleLen);
     float blend = cyclicTime / cycleLen;
@@ -176,7 +180,7 @@ const fragmentShader = `
     float t1 = fbm(nc1, 2.0, 0.5);
     float t2 = fbm(nc2, 2.0, 0.5);
     float turbulence = mix(t2, t1, blend);
-    float ringOpacity = pow(clamp(turbulence, 0.0, 1.0), 1.5);
+    float ringOpacity = pow(clamp(turbulence, 0.0, 1.0), 1.2);
 
     float finalOpacity = ringOpacity * edgeFalloff;
     vec3 finalColor = diskColor * brightness;
@@ -188,7 +192,6 @@ const fragmentShader = `
     float aspect = uResolution.x / uResolution.y;
     vec2 screenPos = vec2(uv.x * aspect, uv.y);
 
-    // Camera basis
     vec3 camPos = uCamPos;
     vec3 camTarget = uCamTarget;
     vec3 camForward = normalize(camTarget - camPos);
@@ -196,16 +199,13 @@ const fragmentShader = `
     vec3 camRight = normalize(cross(worldUp, camForward));
     vec3 camUp = cross(camForward, camRight);
 
-    float fov = 1.0;
+    float fov = 1.0 / tan(radians(uFov * 0.5));
     vec3 rayDir = normalize(camForward * fov + camRight * screenPos.x + camUp * screenPos.y);
 
-    // Black hole parameters
     float mass = 1.0;
     float rs = mass * 2.0;
     float innerR = 3.0;
     float outerR = 12.0;
-    float stepSize = 0.15;
-    float lensing = 1.5;
 
     vec3 rayPos = camPos;
     vec3 prevPos = camPos;
@@ -215,34 +215,31 @@ const fragmentShader = `
     float captured = 0.0;
     float minDist = 1000.0;
 
-    // Raymarching loop
-    for (int i = 0; i < 80; i++) {
+    for (int i = 0; i < 120; i++) {
       if (escaped > 0.5 || captured > 0.5 || alpha > 0.99) break;
 
       float r = length(rayPos);
       minDist = min(minDist, r);
 
-      // Captured by black hole
       if (r < rs * 1.01) {
         captured = 1.0;
         break;
       }
 
-      // Escaped to infinity
-      if (r > 100.0) {
+      if (r > 120.0) {
         escaped = 1.0;
         break;
       }
 
-      // Gravitational bending: a = -rs/r^2 toward center
+      float stepSize = clamp(r * 0.04, 0.02, 0.5);
+
       vec3 toCenter = -rayPos / r;
-      float bendStrength = rs / (r * r) * stepSize * lensing;
+      float bendStrength = rs / (r * r) * stepSize * 1.5;
       rayDir = normalize(rayDir + toCenter * bendStrength);
 
       prevPos = rayPos;
       rayPos += rayDir * stepSize;
 
-      // Disk plane intersection (Y = 0)
       if (prevPos.y * rayPos.y < 0.0 && alpha < 0.99) {
         float t = -prevPos.y / (rayPos.y - prevPos.y);
         vec3 hitPos = mix(prevPos, rayPos, t);
@@ -252,7 +249,7 @@ const fragmentShader = `
           float hitAngle = atan(hitPos.z, hitPos.x);
           vec4 diskResult = accretionDiskColor(
             hitR, hitAngle, uTime, rayDir,
-            innerR, outerR, 26.0, 1.0, 1.5
+            innerR, outerR, 30.0, 1.0, 3.0
           );
 
           float remainingAlpha = 1.0 - alpha;
@@ -262,50 +259,61 @@ const fragmentShader = `
       }
     }
 
-    // If not captured, treat as escaped
     if (captured < 0.5) escaped = 1.0;
 
-    // Photon ring: rays that grazed the photon sphere (~1.5 * rs) without
-    // being captured pick up extra brightness — the thin bright rim seen
-    // at the shadow's edge, giving the horizon visual depth.
     if (captured < 0.5) {
       float photonSphereR = rs * 1.5;
-      float ringProximity = 1.0 - smoothstep(0.0, 0.5, abs(minDist - photonSphereR));
-      vec3 ringGlow = vec3(1.0, 0.92, 0.75) * pow(ringProximity, 4.0) * 2.2;
+      float distFromPhotonSphere = abs(minDist - photonSphereR);
+
+      float ring1 = 1.0 - smoothstep(0.0, 0.15, distFromPhotonSphere);
+      vec3 ringColor1 = vec3(1.0, 0.92, 0.75) * pow(ring1, 3.0) * 4.0;
+
+      float ring2 = 1.0 - smoothstep(0.0, 0.35, distFromPhotonSphere);
+      vec3 ringColor2 = vec3(0.9, 0.7, 0.4) * pow(ring2, 5.0) * 1.5;
+
+      vec3 ringGlow = ringColor1 + ringColor2;
       color += ringGlow * (1.0 - alpha);
     }
 
-    // Background for escaped rays
+    if (captured < 0.5) {
+      float edgeProximity = 1.0 - smoothstep(rs, rs * 2.0, minDist);
+      vec3 horizonGlow = vec3(0.15, 0.02, 0.35) * edgeProximity * 0.6;
+      color += horizonGlow * (1.0 - alpha);
+    }
+
     if (escaped > 0.5 && alpha < 0.99) {
-      // Convert ray direction to spherical for star grid
       float theta = atan(rayDir.z, rayDir.x);
       float phi = asin(clamp(rayDir.y, -1.0, 1.0));
       vec2 rayDirSph = vec2(theta, phi);
 
       vec3 bgColor = vec3(0.001, 0.0, 0.02);
-
-      // Stars
       bgColor += starField(rayDirSph, 1.0, 0.85, 1.5);
-
-      // Nebula
       bgColor += nebulaField(rayDir, 1.5, 0.1, 0.3, 3.0, 0.05, 0.15);
 
       color += bgColor * (1.0 - alpha);
     }
 
-    // Captured rays = pure black
     if (captured > 0.5) {
       color = vec3(0.0);
     }
 
-    // Gamma correction
+    // Event horizon fade: external universe disappears as camera crosses in
+    // scroll 0.5 → 0.8: full fade to black
+    float externalFade = smoothstep(0.5, 0.8, uScrollProgress);
+    color *= (1.0 - externalFade);
+
     gl_FragColor = vec4(color, 1.0);
   }
 `;
 
-export default function BlackHoleBackground() {
+export default function BlackHoleBackground({ scrollProgress = 0 }: { scrollProgress?: number }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const { camera, size } = useThree();
+
+  const fov = useMemo(() => {
+    const cam = camera as THREE.PerspectiveCamera;
+    return cam.fov;
+  }, [camera]);
 
   const material = useMemo(
     () =>
@@ -317,10 +325,13 @@ export default function BlackHoleBackground() {
           uCamPos: { value: new THREE.Vector3() },
           uCamTarget: { value: new THREE.Vector3() },
           uResolution: { value: new THREE.Vector2(size.width, size.height) },
+          uFov: { value: fov },
+          uScrollProgress: { value: 0 },
         },
         depthTest: false,
         depthWrite: false,
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
@@ -329,6 +340,7 @@ export default function BlackHoleBackground() {
     material.uniforms.uCamPos.value.copy(camera.position);
     material.uniforms.uCamTarget.value.set(0, 0, 0);
     material.uniforms.uResolution.value.set(size.width, size.height);
+    material.uniforms.uScrollProgress.value = scrollProgress;
   });
 
   return (
