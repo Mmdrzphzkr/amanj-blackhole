@@ -138,12 +138,7 @@ const fragmentShader = `
                            float rotSpeed, float brightness) {
     float normR = clamp((hitR - innerR) / (outerR - innerR), 0.0, 1.0);
 
-    // Temperature profile: T = T_peak * (r_inner / r)^0.75
-    float peakTempK = diskTemp * 1000.0;
-    float tempK = peakTempK * pow(innerR / hitR, 0.75);
-    vec3 diskColor = blackbodyColor(tempK);
-
-    // Doppler beaming
+    // Doppler beaming — computed first so it can shift color temperature too
     float rotSign = sign(rotSpeed);
     vec3 velocityDir = vec3(-sin(hitAngle) * rotSign, 0.0, cos(hitAngle) * rotSign);
     float velocityMag = 1.0 / sqrt(hitR / innerR);
@@ -151,7 +146,14 @@ const fragmentShader = `
     float cosTheta = dot(velocityDir, rayDir);
     float dopplerFactor = 1.0 / (1.0 - beta * cosTheta);
     float dopplerBoost = pow(abs(dopplerFactor), 3.0 * 0.8);
-    diskColor *= clamp(dopplerBoost, 0.1, 5.0);
+    
+    // Temperature profile: T = T_peak * (r_inner / r)^0.75, blue-shifted on the
+    // approaching side and red-shifted on the receding side (relativistic Doppler)
+    float peakTempK = diskTemp * 1000.0;
+    float tempK = peakTempK * pow(innerR / hitR, 0.75)
+                * mix(0.7, 1.6, clamp(dopplerFactor * 0.5, 0.0, 1.0));
+    vec3 diskColor = blackbodyColor(tempK);
+    diskColor *= clamp(dopplerBoost, 0.15, 6.0);
 
     // Edge falloff
     float edgeFalloff = smoothstep(0.0, 0.15, normR) * smoothstep(1.0, 0.85, normR);
@@ -211,12 +213,14 @@ const fragmentShader = `
     float alpha = 0.0;
     float escaped = 0.0;
     float captured = 0.0;
+    float minDist = 1000.0;
 
     // Raymarching loop
     for (int i = 0; i < 80; i++) {
       if (escaped > 0.5 || captured > 0.5 || alpha > 0.99) break;
 
       float r = length(rayPos);
+      minDist = min(minDist, r);
 
       // Captured by black hole
       if (r < rs * 1.01) {
@@ -248,7 +252,7 @@ const fragmentShader = `
           float hitAngle = atan(hitPos.z, hitPos.x);
           vec4 diskResult = accretionDiskColor(
             hitR, hitAngle, uTime, rayDir,
-            innerR, outerR, 8.0, 1.0, 1.2
+            innerR, outerR, 26.0, 1.0, 1.5
           );
 
           float remainingAlpha = 1.0 - alpha;
@@ -260,6 +264,16 @@ const fragmentShader = `
 
     // If not captured, treat as escaped
     if (captured < 0.5) escaped = 1.0;
+
+    // Photon ring: rays that grazed the photon sphere (~1.5 * rs) without
+    // being captured pick up extra brightness — the thin bright rim seen
+    // at the shadow's edge, giving the horizon visual depth.
+    if (captured < 0.5) {
+      float photonSphereR = rs * 1.5;
+      float ringProximity = 1.0 - smoothstep(0.0, 0.5, abs(minDist - photonSphereR));
+      vec3 ringGlow = vec3(1.0, 0.92, 0.75) * pow(ringProximity, 4.0) * 2.2;
+      color += ringGlow * (1.0 - alpha);
+    }
 
     // Background for escaped rays
     if (escaped > 0.5 && alpha < 0.99) {
@@ -285,9 +299,7 @@ const fragmentShader = `
     }
 
     // Gamma correction
-    vec3 finalColor = pow(color, vec3(1.0 / 2.2));
-
-    gl_FragColor = vec4(finalColor, 1.0);
+    gl_FragColor = vec4(color, 1.0);
   }
 `;
 

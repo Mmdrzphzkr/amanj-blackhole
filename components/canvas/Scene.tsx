@@ -1,11 +1,7 @@
 "use client";
 import { Suspense, useRef, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  EffectComposer,
-  Bloom,
-  Vignette,
-} from "@react-three/postprocessing";
+import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 import BlackHoleBackground from "./BlackHoleBackground";
@@ -71,7 +67,8 @@ export default function Scene({ scrollProgress }: { scrollProgress: number }) {
           antialias: true,
           alpha: false,
           powerPreference: "high-performance",
-          toneMapping: THREE.NoToneMapping,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.1,
         }}
         style={{ background: "#000005" }}
       >
