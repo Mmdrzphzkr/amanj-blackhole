@@ -43,8 +43,11 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, delay: 3.5, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-          scrolled ? "glass border-b border-purple-900/20" : "bg-transparent"
+          scrolled ? "glass border-b border-purple-900/20" : ""
         }`}
+        style={!scrolled ? {
+          background: "linear-gradient(to bottom, rgba(0,0,5,0.6) 0%, rgba(0,0,5,0.2) 70%, transparent 100%)",
+        } : undefined}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
@@ -84,7 +87,7 @@ export default function Navbar() {
                   key={section.id}
                   onClick={() => scrollTo(section.id)}
                   className={`relative px-4 py-2 text-xs tracking-widest transition-colors duration-300
-                    ${active === section.id ? "text-purple-400" : "text-slate-500 hover:text-slate-300"}`}
+                    ${active === section.id ? "text-purple-400" : "text-slate-300 hover:text-white"}`}
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
                   {section.label}

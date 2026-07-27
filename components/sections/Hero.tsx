@@ -19,7 +19,7 @@ export default function Hero() {
       >
         <div className="h-px w-12 bg-gradient-to-r from-transparent to-purple-500" />
         <span
-          className="text-xs tracking-[0.4em] text-purple-400/70"
+          className="text-xs tracking-[0.4em] text-purple-300"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           FULL-STACK DEVELOPER
@@ -114,7 +114,7 @@ export default function Hero() {
         className="absolute bottom-12 left-0 right-0 flex flex-col items-center gap-3"
       >
         <span
-          className="text-[10px] tracking-[0.5em] text-slate-600"
+          className="text-[10px] tracking-[0.5em] text-slate-300"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           SCROLL TO EXPLORE
@@ -141,7 +141,7 @@ export default function Hero() {
         {["React", "Next.js", ".NET", "Python"].map((tech, i) => (
           <span
             key={tech}
-            className="text-[10px] tracking-[0.3em] text-slate-700 hover:text-purple-400
+            className="text-[10px] tracking-[0.3em] text-slate-400 hover:text-purple-400
               transition-colors cursor-default"
             style={{
               fontFamily: "var(--font-mono)",
@@ -162,19 +162,19 @@ export default function Hero() {
           flex-col gap-2 items-end"
       >
         <div
-          className="text-[10px] tracking-[0.3em] text-slate-700"
+          className="text-[10px] tracking-[0.3em] text-slate-400"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           25 YO DEVELOPER
         </div>
         <div
-          className="text-[10px] tracking-[0.3em] text-slate-700"
+          className="text-[10px] tracking-[0.3em] text-slate-400"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           4+ YEARS EXP
         </div>
         <div
-          className="text-[10px] tracking-[0.3em] text-purple-500/60"
+          className="text-[10px] tracking-[0.3em] text-purple-400"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           AMANJ DEVS TEAM

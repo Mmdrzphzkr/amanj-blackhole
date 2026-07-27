@@ -38,7 +38,7 @@ export default function TechStack() {
           className="mb-20"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-500/60 mb-4 text-center"
+            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 006 ] — ARSENAL
@@ -93,7 +93,7 @@ export default function TechStack() {
                       {tech.name}
                     </span>
                     <span
-                      className="text-[10px] text-slate-600 whitespace-nowrap"
+                      className="text-[10px] text-slate-400 whitespace-nowrap"
                       style={{ fontFamily: "var(--font-body)" }}
                     >
                       {tech.category}
@@ -113,7 +113,7 @@ export default function TechStack() {
           className="mt-20"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-500/60 mb-8 text-center"
+            className="text-xs tracking-[0.5em] text-purple-400 mb-8 text-center"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             THE CREW
@@ -175,7 +175,7 @@ export default function TechStack() {
                   {member.name}
                 </div>
                 <div
-                  className="text-xs text-slate-600"
+                  className="text-xs text-slate-400"
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
                   {member.skills}

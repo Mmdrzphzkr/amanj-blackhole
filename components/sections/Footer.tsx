@@ -7,7 +7,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative z-10 border-t border-purple-900/20 py-16 px-6 md:px-12">
+    <footer
+      className="relative z-10 border-t border-purple-900/20 py-16 px-6 md:px-12"
+      style={{
+        background: "linear-gradient(to top, rgba(0,0,5,0.75) 0%, rgba(0,0,5,0.35) 55%, transparent 100%)",
+      }}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
@@ -19,7 +24,7 @@ export default function Footer() {
               AMANJ<span className="text-gradient-purple"> DEVS</span>
             </div>
             <p
-              className="text-sm text-slate-600 leading-relaxed"
+              className="text-sm text-slate-300 leading-relaxed"
               style={{ fontFamily: "var(--font-body)" }}
             >
               A team of 3 specialists building extraordinary digital products.
@@ -30,7 +35,7 @@ export default function Footer() {
           {/* Navigation */}
           <div>
             <div
-              className="text-[10px] tracking-[0.4em] text-purple-500/60 mb-4"
+              className="text-[10px] tracking-[0.4em] text-purple-400 mb-4"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               NAVIGATE
@@ -49,7 +54,7 @@ export default function Footer() {
                 <button
                   key={id}
                   onClick={() => scrollTo(id)}
-                  className="text-left text-sm text-slate-600 hover:text-purple-400
+                  className="text-left text-sm text-slate-300 hover:text-purple-400
                       transition-colors duration-300 capitalize"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
@@ -68,7 +73,7 @@ export default function Footer() {
           {/* Contact Info */}
           <div>
             <div
-              className="text-[10px] tracking-[0.4em] text-purple-500/60 mb-4"
+              className="text-[10px] tracking-[0.4em] text-purple-400 mb-4"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               CONTACT
@@ -81,13 +86,13 @@ export default function Footer() {
               ].map((item) => (
                 <div key={item.label}>
                   <div
-                    className="text-[9px] tracking-widest text-slate-700"
+                    className="text-[9px] tracking-widest text-slate-400"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
                     {item.label}
                   </div>
                   <div
-                    className="text-sm text-slate-400"
+                    className="text-sm text-slate-300"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     {item.value}
@@ -104,7 +109,7 @@ export default function Footer() {
             items-center justify-between gap-4"
         >
           <p
-            className="text-xs text-slate-700"
+            className="text-xs text-slate-400"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             © {new Date().getFullYear()} AMANJ DEVS — ALL RIGHTS RESERVED
@@ -112,7 +117,7 @@ export default function Footer() {
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
             <span
-              className="text-[10px] tracking-widest text-slate-700"
+              className="text-[10px] tracking-widest text-slate-400"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               SYSTEMS OPERATIONAL

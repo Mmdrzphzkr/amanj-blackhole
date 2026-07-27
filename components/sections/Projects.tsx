@@ -21,7 +21,7 @@ export default function Projects() {
           className="mb-20"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-500/60 mb-4 text-center"
+            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 004 ] — GALAXIES
@@ -98,7 +98,7 @@ export default function Projects() {
                       {project.category}
                     </div>
                     <div
-                      className="text-[10px] text-slate-600"
+                      className="text-[10px] text-slate-400"
                       style={{ fontFamily: "var(--font-mono)" }}
                     >
                       {project.year}
@@ -119,7 +119,7 @@ export default function Projects() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="text-sm text-slate-500 leading-relaxed mb-4"
+                        className="text-sm text-slate-300 leading-relaxed mb-4"
                         style={{ fontFamily: "var(--font-body)" }}
                       >
                         {project.desc}

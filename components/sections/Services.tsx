@@ -20,7 +20,7 @@ export default function Services() {
           className="mb-20"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-500/60 mb-4 text-center"
+            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 005 ] — FORCES
@@ -71,7 +71,7 @@ export default function Services() {
                 </h3>
 
                 <p
-                  className="text-sm text-slate-500 leading-relaxed mb-5"
+                  className="text-sm text-slate-300 leading-relaxed mb-5"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   {service.desc}

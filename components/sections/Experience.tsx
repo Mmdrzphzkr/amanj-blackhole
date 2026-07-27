@@ -20,7 +20,7 @@ export default function Experience() {
           className="mb-20"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-500/60 mb-4 text-center"
+            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 003 ] — TIMELINE
@@ -123,7 +123,7 @@ export default function Experience() {
                     </div>
 
                     <p
-                      className="text-sm text-slate-500 leading-relaxed"
+                      className="text-sm text-slate-300 leading-relaxed"
                       style={{ fontFamily: "var(--font-body)" }}
                     >
                       {exp.desc}

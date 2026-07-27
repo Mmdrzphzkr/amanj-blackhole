@@ -32,7 +32,7 @@ export default function Contact() {
           className="mb-20 text-center"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-500/60 mb-4"
+            className="text-xs tracking-[0.5em] text-purple-400 mb-4"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 007 ] — SINGULARITY
@@ -52,7 +52,7 @@ export default function Contact() {
             THE VOID
           </h2>
           <p
-            className="text-slate-500 max-w-md mx-auto"
+            className="text-slate-300 max-w-md mx-auto"
             style={{ fontFamily: "var(--font-body)" }}
           >
             Send your project into the singularity. We'll pull it back
@@ -83,7 +83,7 @@ export default function Contact() {
               MESSAGE TRANSMITTED
             </h3>
             <p
-              className="text-slate-500"
+              className="text-slate-300"
               style={{ fontFamily: "var(--font-body)" }}
             >
               Your signal has crossed the event horizon. We'll respond within 24
@@ -115,7 +115,7 @@ export default function Contact() {
               ].map((field) => (
                 <div key={field.key}>
                   <label
-                    className="block text-[10px] tracking-[0.4em] text-purple-500/60 mb-2"
+                className="block text-[10px] tracking-[0.4em] text-purple-400 mb-2"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
                     {field.label}
@@ -144,10 +144,10 @@ export default function Contact() {
             <div className="grid md:grid-cols-2 gap-5 mb-5">
               <div>
                 <label
-                  className="block text-[10px] tracking-[0.4em] text-purple-500/60 mb-2"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  PROJECT TYPE
+                    className="block text-[10px] tracking-[0.4em] text-purple-400 mb-2"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                  >
+                    PROJECT TYPE
                 </label>
                 <select
                   value={form.project}
@@ -185,7 +185,7 @@ export default function Contact() {
               </div>
               <div>
                 <label
-                  className="block text-[10px] tracking-[0.4em] text-purple-500/60 mb-2"
+                  className="block text-[10px] tracking-[0.4em] text-purple-400 mb-2"
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
                   BUDGET RANGE
@@ -284,7 +284,7 @@ export default function Contact() {
             </button>
 
             <p
-              className="text-center text-xs text-slate-700 mt-4"
+              className="text-center text-xs text-slate-400 mt-4"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               Response within 24 hours • No commitment required

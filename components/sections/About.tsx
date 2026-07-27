@@ -18,7 +18,7 @@ export default function About() {
               transition={{ duration: 1 }}
             >
               <div
-                className="text-xs tracking-[0.5em] text-purple-500/60 mb-6"
+                className="text-xs tracking-[0.5em] text-purple-400 mb-6"
                 style={{ fontFamily: "var(--font-mono)" }}
               >
                 [ 001 ] — ENTITY
@@ -124,7 +124,7 @@ export default function About() {
                     {item.value}
                   </div>
                   <div
-                    className="text-xs text-slate-500 mt-1"
+                    className="text-xs text-slate-400 mt-1"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     {item.sub}
@@ -148,7 +148,7 @@ export default function About() {
           className="mt-20 text-center"
         >
           <div
-            className="text-3xl md:text-5xl font-light text-slate-600 leading-tight
+            className="text-3xl md:text-5xl font-light text-slate-300 leading-tight
               max-w-4xl mx-auto"
             style={{ fontFamily: "var(--font-display)" }}
           >

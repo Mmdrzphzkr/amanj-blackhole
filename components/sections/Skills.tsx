@@ -19,7 +19,7 @@ export default function Skills() {
           className="mb-16"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-500/60 mb-4 text-center"
+            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 002 ] — ELEMENTS
