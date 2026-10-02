@@ -35,22 +35,18 @@ export default function TechStack() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          className="mb-20"
+          className="mb-20 flex flex-col items-center"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
+            className="label-badge mb-4"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 006 ] — ARSENAL
           </div>
           <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none"
+            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
             style={{
               fontFamily: "var(--font-display)",
-              background:
-                "linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.2))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
             }}
           >
             TECH
@@ -86,14 +82,17 @@ export default function TechStack() {
                       group-hover:bg-yellow-400 transition-colors"
                     />
                     <span
-                      className="text-sm font-medium text-slate-300 whitespace-nowrap
-                        group-hover:text-white transition-colors"
-                      style={{ fontFamily: "var(--font-mono)" }}
+                      className="text-sm font-semibold whitespace-nowrap
+                        text-white transition-colors"
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        textShadow: "0 1px 6px rgba(0,0,0,0.9)",
+                      }}
                     >
                       {tech.name}
                     </span>
                     <span
-                      className="text-[10px] text-slate-400 whitespace-nowrap"
+                      className="text-xs whitespace-nowrap card-text-dim"
                       style={{ fontFamily: "var(--font-body)" }}
                     >
                       {tech.category}
@@ -110,10 +109,10 @@ export default function TechStack() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
-          className="mt-20"
+          className="mt-20 flex flex-col items-center"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-400 mb-8 text-center"
+            className="label-badge mb-8"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             THE CREW
@@ -169,13 +168,13 @@ export default function TechStack() {
                   {member.role.toUpperCase()}
                 </div>
                 <div
-                  className="text-white font-semibold mb-2"
+                  className="text-white font-semibold mb-2 text-display-shadow"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {member.name}
                 </div>
                 <div
-                  className="text-xs text-slate-400"
+                  className="text-xs card-text-dim"
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
                   {member.skills}

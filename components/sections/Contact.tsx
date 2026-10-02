@@ -29,22 +29,18 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          className="mb-20 text-center"
+          className="mb-20 text-center flex flex-col items-center"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-400 mb-4"
+            className="label-badge mb-4"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 007 ] — SINGULARITY
           </div>
           <h2
-            className="text-5xl md:text-7xl font-black leading-none mb-6"
+            className="text-5xl md:text-7xl font-black leading-none mb-6 title-solid"
             style={{
               fontFamily: "var(--font-display)",
-              background:
-                "linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.2))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
             }}
           >
             ENTER
@@ -52,7 +48,7 @@ export default function Contact() {
             THE VOID
           </h2>
           <p
-            className="text-slate-300 max-w-md mx-auto"
+            className="readable text-base md:text-lg max-w-md mx-auto"
             style={{ fontFamily: "var(--font-body)" }}
           >
             Send your project into the singularity. We'll pull it back
@@ -83,7 +79,7 @@ export default function Contact() {
               MESSAGE TRANSMITTED
             </h3>
             <p
-              className="text-slate-300"
+              className="readable text-[15px]"
               style={{ fontFamily: "var(--font-body)" }}
             >
               Your signal has crossed the event horizon. We'll respond within 24
@@ -115,8 +111,12 @@ export default function Contact() {
               ].map((field) => (
                 <div key={field.key}>
                   <label
-                className="block text-[10px] tracking-[0.4em] text-purple-400 mb-2"
-                    style={{ fontFamily: "var(--font-mono)" }}
+                className="block text-[11px] tracking-[0.3em] font-semibold mb-2"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  color: "#d8ccff",
+                  textShadow: "0 1px 4px rgba(0,0,0,0.9)",
+                }}
                   >
                     {field.label}
                   </label>
@@ -127,13 +127,14 @@ export default function Contact() {
                       setForm({ ...form, [field.key]: e.target.value })
                     }
                     placeholder={field.placeholder}
-                    className="w-full px-4 py-3 rounded-xl text-white text-sm
-                      transition-all duration-300 outline-none focus:border-purple-500/60
-                      placeholder-slate-700"
+                    className="w-full px-4 py-3.5 rounded-xl text-white text-[15px]
+                      transition-all duration-300 outline-none focus:border-purple-400
+                      placeholder:text-slate-500"
                     style={{
                       fontFamily: "var(--font-body)",
-                      background: "rgba(3,0,15,0.6)",
-                      border: "1px solid rgba(124,58,237,0.15)",
+                      background: "rgba(0,0,8,0.75)",
+                      border: "1px solid rgba(168,85,247,0.3)",
+                      textShadow: "none",
                     }}
                     required
                   />
@@ -144,8 +145,12 @@ export default function Contact() {
             <div className="grid md:grid-cols-2 gap-5 mb-5">
               <div>
                 <label
-                    className="block text-[10px] tracking-[0.4em] text-purple-400 mb-2"
-                    style={{ fontFamily: "var(--font-mono)" }}
+                    className="block text-[11px] tracking-[0.3em] font-semibold mb-2"
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      color: "#d8ccff",
+                      textShadow: "0 1px 4px rgba(0,0,0,0.9)",
+                    }}
                   >
                     PROJECT TYPE
                 </label>
@@ -154,13 +159,13 @@ export default function Contact() {
                   onChange={(e) =>
                     setForm({ ...form, project: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-xl text-white text-sm
+                  className="w-full px-4 py-3.5 rounded-xl text-[15px]
                     transition-all duration-300 outline-none appearance-none cursor-pointer"
                   style={{
                     fontFamily: "var(--font-body)",
-                    background: "rgba(3,0,15,0.6)",
-                    border: "1px solid rgba(124,58,237,0.15)",
-                    color: form.project ? "white" : "#334155",
+                    background: "rgba(0,0,8,0.75)",
+                    border: "1px solid rgba(168,85,247,0.3)",
+                    color: form.project ? "white" : "#94a3b8",
                   }}
                 >
                   <option value="" style={{ background: "#03000f" }}>
@@ -185,21 +190,25 @@ export default function Contact() {
               </div>
               <div>
                 <label
-                  className="block text-[10px] tracking-[0.4em] text-purple-400 mb-2"
-                  style={{ fontFamily: "var(--font-mono)" }}
+                  className="block text-[11px] tracking-[0.3em] font-semibold mb-2"
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    color: "#d8ccff",
+                    textShadow: "0 1px 4px rgba(0,0,0,0.9)",
+                  }}
                 >
                   BUDGET RANGE
                 </label>
                 <select
                   value={form.budget}
                   onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl text-white text-sm
+                  className="w-full px-4 py-3.5 rounded-xl text-[15px]
                     transition-all duration-300 outline-none appearance-none cursor-pointer"
                   style={{
                     fontFamily: "var(--font-body)",
-                    background: "rgba(3,0,15,0.6)",
-                    border: "1px solid rgba(124,58,237,0.15)",
-                    color: form.budget ? "white" : "#334155",
+                    background: "rgba(0,0,8,0.75)",
+                    border: "1px solid rgba(168,85,247,0.3)",
+                    color: form.budget ? "white" : "#94a3b8",
                   }}
                 >
                   <option value="" style={{ background: "#03000f" }}>
@@ -226,8 +235,12 @@ export default function Contact() {
 
             <div className="mb-8">
               <label
-                className="block text-[10px] tracking-[0.4em] text-purple-500/60 mb-2"
-                style={{ fontFamily: "var(--font-mono)" }}
+                className="block text-[11px] tracking-[0.3em] font-semibold mb-2"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  color: "#d8ccff",
+                  textShadow: "0 1px 4px rgba(0,0,0,0.9)",
+                }}
               >
                 YOUR MESSAGE
               </label>
@@ -236,13 +249,13 @@ export default function Contact() {
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 placeholder="Describe your project, goals, and vision..."
                 rows={5}
-                className="w-full px-4 py-3 rounded-xl text-white text-sm
+                className="w-full px-4 py-3.5 rounded-xl text-white text-[15px]
                   transition-all duration-300 outline-none resize-none
-                  placeholder-slate-700"
+                  placeholder:text-slate-500"
                 style={{
                   fontFamily: "var(--font-body)",
-                  background: "rgba(3,0,15,0.6)",
-                  border: "1px solid rgba(124,58,237,0.15)",
+                  background: "rgba(0,0,8,0.75)",
+                  border: "1px solid rgba(168,85,247,0.3)",
                 }}
                 required
               />
@@ -284,7 +297,7 @@ export default function Contact() {
             </button>
 
             <p
-              className="text-center text-xs text-slate-400 mt-4"
+              className="text-center text-[13px] card-text-dim mt-4"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               Response within 24 hours • No commitment required

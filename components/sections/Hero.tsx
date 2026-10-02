@@ -19,7 +19,7 @@ export default function Hero() {
       >
         <div className="h-px w-12 bg-gradient-to-r from-transparent to-purple-500" />
         <span
-          className="text-xs tracking-[0.4em] text-purple-300"
+          className="label-badge"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           FULL-STACK DEVELOPER
@@ -41,11 +41,11 @@ export default function Hero() {
           <h1
             ref={titleRef}
             className="text-[12vw] sm:text-[10vw] md:text-[8vw] font-black leading-none
-              tracking-tighter mb-2 select-none"
+              tracking-tighter mb-2 select-none text-display-shadow"
             style={{
               fontFamily: "var(--font-display)",
               background:
-                "linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.4) 100%)",
+                "linear-gradient(180deg, #ffffff 0%, #f1edff 55%, #c9bdf5 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -68,10 +68,11 @@ export default function Hero() {
               tracking-tighter select-none"
             style={{
               fontFamily: "var(--font-display)",
-              background: "linear-gradient(135deg, #7c3aed, #a855f7, #06b6d4)",
+              background: "linear-gradient(135deg, #d8b4fe, #a855f7 45%, #67e8f9)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 0 30px rgba(124,58,237,0.5))",
+              filter:
+                "drop-shadow(0 2px 12px rgba(0,0,0,0.95)) drop-shadow(0 0 30px rgba(124,58,237,0.45))",
             }}
           >
             DEVS
@@ -94,13 +95,18 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 4.4 }}
-          className="text-sm md:text-base tracking-widest text-slate-400 max-w-md mx-auto
-            leading-relaxed"
-          style={{ fontFamily: "var(--font-body)" }}
+          className="text-base md:text-lg tracking-wide max-w-md mx-auto
+            leading-relaxed readable px-6 py-4 rounded-2xl"
+          style={{
+            fontFamily: "var(--font-body)",
+            background: "rgba(0,0,5,0.55)",
+            border: "1px solid rgba(168,85,247,0.18)",
+            backdropFilter: "blur(12px)",
+          }}
         >
           You are not visiting a website.
           <br />
-          <span className="text-purple-400/80">
+          <span className="text-gradient-purple font-semibold">
             You are entering a universe.
           </span>
         </motion.p>
@@ -114,8 +120,12 @@ export default function Hero() {
         className="absolute bottom-12 left-0 right-0 flex flex-col items-center gap-3"
       >
         <span
-          className="text-[10px] tracking-[0.5em] text-slate-300"
-          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[11px] tracking-[0.5em] readable px-4 py-2 rounded-full"
+          style={{
+            fontFamily: "var(--font-mono)",
+            background: "rgba(0,0,5,0.6)",
+            border: "1px solid rgba(168,85,247,0.2)",
+          }}
         >
           SCROLL TO EXPLORE
         </span>
@@ -141,12 +151,13 @@ export default function Hero() {
         {["React", "Next.js", ".NET", "Python"].map((tech, i) => (
           <span
             key={tech}
-            className="text-[10px] tracking-[0.3em] text-slate-400 hover:text-purple-400
-              transition-colors cursor-default"
+            className="text-[11px] tracking-[0.3em] readable hover:text-purple-300
+              transition-colors cursor-default px-2 py-1 rounded-md"
             style={{
               fontFamily: "var(--font-mono)",
               writingMode: "vertical-rl",
               transform: "rotate(180deg)",
+              background: "rgba(0,0,5,0.55)",
             }}
           >
             {tech}
@@ -162,20 +173,25 @@ export default function Hero() {
           flex-col gap-2 items-end"
       >
         <div
-          className="text-[10px] tracking-[0.3em] text-slate-400"
-          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[11px] tracking-[0.3em] readable px-3 py-1.5 rounded-md"
+          style={{ fontFamily: "var(--font-mono)", background: "rgba(0,0,5,0.55)" }}
         >
           25 YO DEVELOPER
         </div>
         <div
-          className="text-[10px] tracking-[0.3em] text-slate-400"
-          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[11px] tracking-[0.3em] readable px-3 py-1.5 rounded-md"
+          style={{ fontFamily: "var(--font-mono)", background: "rgba(0,0,5,0.55)" }}
         >
           4+ YEARS EXP
         </div>
         <div
-          className="text-[10px] tracking-[0.3em] text-purple-400"
-          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[11px] tracking-[0.3em] px-3 py-1.5 rounded-md text-glow-purple"
+          style={{
+            fontFamily: "var(--font-mono)",
+            color: "#d8b4fe",
+            background: "rgba(0,0,5,0.65)",
+            border: "1px solid rgba(168,85,247,0.25)",
+          }}
         >
           AMANJ DEVS TEAM
         </div>

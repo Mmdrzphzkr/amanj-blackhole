@@ -16,22 +16,18 @@ export default function Skills() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          className="mb-16"
+          className="mb-16 flex flex-col items-center"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
+            className="label-badge mb-4"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 002 ] — ELEMENTS
           </div>
           <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none"
+            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
             style={{
               fontFamily: "var(--font-display)",
-              background:
-                "linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.2))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
             }}
           >
             TECH
@@ -64,19 +60,20 @@ export default function Skills() {
                   style={{
                     background:
                       hovered === skill.name
-                        ? `${skill.color}20`
-                        : "rgba(10,0,32,0.6)",
+                        ? `${skill.color}25`
+                        : "rgba(3,0,15,0.82)",
                     border: `1px solid ${
                       hovered === skill.name
                         ? skill.color
-                        : "rgba(124,58,237,0.15)"
+                        : "rgba(168,85,247,0.3)"
                     }`,
                     boxShadow:
                       hovered === skill.name
                         ? `0 0 30px ${skill.color}30, 0 0 60px ${skill.color}10`
-                        : "none",
+                        : "0 4px 20px rgba(0,0,0,0.6)",
                     transform:
                       hovered === skill.name ? "scale(1.1)" : "scale(1)",
+                    backdropFilter: "blur(12px)",
                   }}
                 >
                   <div className="flex items-center gap-2">
@@ -88,7 +85,8 @@ export default function Skills() {
                       className="text-sm font-medium"
                       style={{
                         fontFamily: "var(--font-mono)",
-                        color: hovered === skill.name ? skill.color : "#94a3b8",
+                        color: hovered === skill.name ? "#ffffff" : "#dbe2f0",
+                        textShadow: "0 1px 6px rgba(0,0,0,0.9)",
                       }}
                     >
                       {skill.name}
@@ -140,13 +138,17 @@ export default function Skills() {
             return (
               <div key={cat} className="glass rounded-xl p-6">
                 <div
-                  className="text-[10px] tracking-[0.3em] text-purple-500/60 mb-2"
-                  style={{ fontFamily: "var(--font-mono)" }}
+                  className="text-[11px] tracking-[0.3em] mb-2 font-semibold"
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    color: "#c4b5fd",
+                    textShadow: "0 1px 4px rgba(0,0,0,0.9)",
+                  }}
                 >
                   {cat.toUpperCase()}
                 </div>
                 <div
-                  className="text-2xl font-bold text-white mb-2"
+                  className="text-2xl font-bold text-white mb-2 text-display-shadow"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {Math.round(avgLevel)}%

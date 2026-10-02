@@ -17,22 +17,18 @@ export default function Services() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          className="mb-20"
+          className="mb-20 flex flex-col items-center"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
+            className="label-badge mb-4"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 005 ] — FORCES
           </div>
           <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none"
+            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
             style={{
               fontFamily: "var(--font-display)",
-              background:
-                "linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.2))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
             }}
           >
             WHAT WE
@@ -64,14 +60,14 @@ export default function Services() {
                 <div className="text-4xl mb-5">{service.icon}</div>
 
                 <h3
-                  className="text-lg font-bold text-white mb-3 transition-all duration-300"
+                  className="text-lg font-bold text-white mb-3 transition-all duration-300 text-display-shadow"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {service.title}
                 </h3>
 
                 <p
-                  className="text-sm text-slate-300 leading-relaxed mb-5"
+                  className="text-[15px] card-text leading-relaxed mb-5"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   {service.desc}

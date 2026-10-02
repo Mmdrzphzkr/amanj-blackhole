@@ -10,7 +10,7 @@ export default function Footer() {
     <footer
       className="relative z-10 border-t border-purple-900/20 py-16 px-6 md:px-12"
       style={{
-        background: "linear-gradient(to top, rgba(0,0,5,0.75) 0%, rgba(0,0,5,0.35) 55%, transparent 100%)",
+        background: "linear-gradient(to top, rgba(0,0,5,0.92) 0%, rgba(0,0,5,0.65) 55%, transparent 100%)",
       }}
     >
       <div className="max-w-6xl mx-auto">
@@ -24,7 +24,7 @@ export default function Footer() {
               AMANJ<span className="text-gradient-purple"> DEVS</span>
             </div>
             <p
-              className="text-sm text-slate-300 leading-relaxed"
+              className="text-[15px] card-text leading-relaxed"
               style={{ fontFamily: "var(--font-body)" }}
             >
               A team of 3 specialists building extraordinary digital products.
@@ -54,7 +54,7 @@ export default function Footer() {
                 <button
                   key={id}
                   onClick={() => scrollTo(id)}
-                  className="text-left text-sm text-slate-300 hover:text-purple-400
+                  className="text-left text-[14px] card-text hover:text-white
                       transition-colors duration-300 capitalize"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
@@ -86,13 +86,13 @@ export default function Footer() {
               ].map((item) => (
                 <div key={item.label}>
                   <div
-                    className="text-[9px] tracking-widest text-slate-400"
+                    className="text-[10px] tracking-widest card-text-dim"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
                     {item.label}
                   </div>
                   <div
-                    className="text-sm text-slate-300"
+                    className="text-[14px] card-text"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     {item.value}

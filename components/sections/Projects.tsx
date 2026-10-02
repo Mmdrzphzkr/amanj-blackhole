@@ -18,22 +18,18 @@ export default function Projects() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          className="mb-20"
+          className="mb-20 flex flex-col items-center"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
+            className="label-badge mb-4"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 004 ] — GALAXIES
           </div>
           <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none"
+            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
             style={{
               fontFamily: "var(--font-display)",
-              background:
-                "linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.2))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
             }}
           >
             FEATURED
@@ -99,15 +95,20 @@ export default function Projects() {
                     </div>
                     <div
                       className="text-[10px] text-slate-400"
-                      style={{ fontFamily: "var(--font-mono)" }}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        background: "rgba(0,0,5,0.6)",
+                        padding: "0.2rem 0.6rem",
+                        borderRadius: "9999px",
+                      }}
                     >
                       {project.year}
                     </div>
                   </div>
 
                   <h3
-                    className="text-xl font-bold text-white mb-3 group-hover:text-gradient-purple
-                      transition-all duration-300"
+                    className="text-xl font-bold text-white mb-3
+                      transition-all duration-300 text-display-shadow"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {project.title}
@@ -119,7 +120,7 @@ export default function Projects() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="text-sm text-slate-300 leading-relaxed mb-4"
+                        className="text-[15px] card-text leading-relaxed mb-4"
                         style={{ fontFamily: "var(--font-body)" }}
                       >
                         {project.desc}
@@ -134,12 +135,13 @@ export default function Projects() {
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="text-[9px] px-2 py-1 rounded-full"
+                        className="text-[10px] px-2.5 py-1.5 rounded-full font-medium"
                         style={{
                           fontFamily: "var(--font-mono)",
-                          background: `${project.color}10`,
-                          color: project.color,
-                          border: `1px solid ${project.color}20`,
+                          background: "rgba(0,0,5,0.7)",
+                          color: "#e8edf7",
+                          border: `1px solid ${project.color}50`,
+                          textShadow: "0 1px 4px rgba(0,0,0,0.9)",
                         }}
                       >
                         {tech}

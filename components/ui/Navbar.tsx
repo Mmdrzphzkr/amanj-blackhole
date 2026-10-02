@@ -46,7 +46,7 @@ export default function Navbar() {
           scrolled ? "glass border-b border-purple-900/20" : ""
         }`}
         style={!scrolled ? {
-          background: "linear-gradient(to bottom, rgba(0,0,5,0.6) 0%, rgba(0,0,5,0.2) 70%, transparent 100%)",
+          background: "linear-gradient(to bottom, rgba(0,0,5,0.85) 0%, rgba(0,0,5,0.5) 70%, transparent 100%)",
         } : undefined}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -86,9 +86,12 @@ export default function Navbar() {
                 <button
                   key={section.id}
                   onClick={() => scrollTo(section.id)}
-                  className={`relative px-4 py-2 text-xs tracking-widest transition-colors duration-300
-                    ${active === section.id ? "text-purple-400" : "text-slate-300 hover:text-white"}`}
-                  style={{ fontFamily: "var(--font-mono)" }}
+                  className={`relative px-4 py-2 text-[13px] font-medium tracking-widest transition-colors duration-300
+                    ${active === section.id ? "text-white" : "text-slate-200 hover:text-white"}`}
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    textShadow: "0 1px 8px rgba(0,0,0,0.95), 0 2px 16px rgba(0,0,0,0.9)",
+                  }}
                 >
                   {section.label}
                   {active === section.id && (

@@ -18,20 +18,16 @@ export default function About() {
               transition={{ duration: 1 }}
             >
               <div
-                className="text-xs tracking-[0.5em] text-purple-400 mb-6"
+                className="label-badge mb-6"
                 style={{ fontFamily: "var(--font-mono)" }}
               >
                 [ 001 ] — ENTITY
               </div>
 
               <h2
-                className="text-5xl md:text-7xl font-black leading-none mb-8"
+                className="text-5xl md:text-7xl font-black leading-none mb-8 title-solid"
                 style={{
                   fontFamily: "var(--font-display)",
-                  background:
-                    "linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.2))",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
                 }}
               >
                 WHO
@@ -40,19 +36,19 @@ export default function About() {
               </h2>
 
               <div
-                className="space-y-5 text-slate-400 leading-relaxed"
+                className="space-y-5 text-[15px] md:text-base leading-relaxed readable"
                 style={{ fontFamily: "var(--font-body)" }}
               >
                 <p>
                   I am a{" "}
-                  <span className="text-white font-medium">
+                  <span className="text-white font-semibold">
                     25-year-old developer
                   </span>{" "}
                   who doesn't just write code — I architect{" "}
-                  <span className="text-purple-400">digital realities</span>.
+                  <span className="text-gradient-purple font-semibold">digital realities</span>.
                 </p>
                 <p>
-                  With <span className="text-white">4+ years</span> of
+                  With <span className="text-white font-semibold">4+ years</span> of
                   experience, I build across the full spectrum — from
                   pixel-perfect frontends to algorithmic trading systems that
                   operate in milliseconds.
@@ -64,7 +60,7 @@ export default function About() {
                   </span>{" "}
                   — a precision team of 3: two engineers and a designer, united
                   by one obsession:{" "}
-                  <span className="text-white">excellence</span>.
+                  <span className="text-white font-semibold">excellence</span>.
                 </p>
               </div>
             </motion.div>
@@ -118,13 +114,13 @@ export default function About() {
                     {item.label}
                   </div>
                   <div
-                    className="text-2xl font-bold text-white"
+                    className="text-2xl font-bold text-white text-display-shadow"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {item.value}
                   </div>
                   <div
-                    className="text-xs text-slate-400 mt-1"
+                    className="text-[13px] card-text-dim mt-1"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     {item.sub}
@@ -148,9 +144,14 @@ export default function About() {
           className="mt-20 text-center"
         >
           <div
-            className="text-3xl md:text-5xl font-light text-slate-300 leading-tight
-              max-w-4xl mx-auto"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="text-3xl md:text-5xl font-light leading-tight
+              max-w-4xl mx-auto readable px-6 py-8 rounded-3xl"
+            style={{
+              fontFamily: "var(--font-display)",
+              background: "rgba(0,0,5,0.55)",
+              border: "1px solid rgba(168,85,247,0.18)",
+              backdropFilter: "blur(12px)",
+            }}
           >
             "Every project is a{" "}
             <span className="text-gradient-purple font-bold">galaxy</span>.

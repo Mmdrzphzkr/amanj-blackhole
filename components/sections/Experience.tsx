@@ -17,22 +17,18 @@ export default function Experience() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          className="mb-20"
+          className="mb-20 flex flex-col items-center"
         >
           <div
-            className="text-xs tracking-[0.5em] text-purple-400 mb-4 text-center"
+            className="label-badge mb-4"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             [ 003 ] — TIMELINE
           </div>
           <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none"
+            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
             style={{
               fontFamily: "var(--font-display)",
-              background:
-                "linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.2))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
             }}
           >
             THROUGH
@@ -106,7 +102,7 @@ export default function Experience() {
                     </div>
 
                     <h3
-                      className="text-xl font-bold text-white mb-1"
+                      className="text-xl font-bold text-white mb-1 text-display-shadow"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {exp.role}
@@ -123,7 +119,7 @@ export default function Experience() {
                     </div>
 
                     <p
-                      className="text-sm text-slate-300 leading-relaxed"
+                      className="text-[15px] card-text leading-relaxed"
                       style={{ fontFamily: "var(--font-body)" }}
                     >
                       {exp.desc}
