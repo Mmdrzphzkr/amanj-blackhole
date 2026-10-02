@@ -23,240 +23,156 @@ export default function Contact() {
     setSent(true);
   };
 
+  const fieldLabel = (text: string) => (
+    <label
+      className="mb-2 block text-[11px] tracking-[0.25em] font-semibold"
+      style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}
+    >
+      {text}
+    </label>
+  );
+
   return (
     <section id="contact" className="section-container relative z-10" ref={ref}>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto w-full">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          className="mb-20 text-center flex flex-col items-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="section-head center items-center"
         >
-          <div
-            className="label-badge mb-4"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            [ 007 ] — SINGULARITY
-          </div>
-          <h2
-            className="text-5xl md:text-7xl font-black leading-none mb-6 title-solid"
-            style={{
-              fontFamily: "var(--font-display)",
-            }}
-          >
-            ENTER
+          <span className="eyebrow" style={{ fontFamily: "var(--font-mono)" }}>
+            007 — CONTACT
+          </span>
+          <h2>
+            Tell us about
             <br />
-            THE VOID
+            your project.
           </h2>
-          <p
-            className="readable text-base md:text-lg max-w-md mx-auto"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
-            Send your project into the singularity. We'll pull it back
-            transformed.
+          <div className="section-rule" />
+          <p>
+            One message is enough. We reply within 24 hours with next
+            steps, timeline and a fixed quote.
           </p>
         </motion.div>
 
         {sent ? (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-20"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="panel p-14 text-center"
           >
             <div
-              className="w-24 h-24 rounded-full mx-auto mb-8 flex items-center justify-center"
+              className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full text-2xl"
               style={{
-                background: "radial-gradient(circle, #7c3aed30, transparent)",
-                border: "1px solid #7c3aed40",
-                boxShadow: "0 0 60px rgba(124,58,237,0.2)",
+                background: "var(--surface-2)",
+                border: "1px solid var(--line)",
               }}
             >
-              <span className="text-4xl">🌌</span>
+              ✓
             </div>
             <h3
-              className="text-3xl font-bold text-white mb-4"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-2xl font-bold"
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "var(--text)",
+              }}
             >
-              MESSAGE TRANSMITTED
+              Message received
             </h3>
-            <p
-              className="readable text-[15px]"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              Your signal has crossed the event horizon. We'll respond within 24
-              hours.
+            <p className="lead mx-auto mt-3 max-w-md">
+              Thanks for reaching out. We&apos;ll respond within 24 hours
+              with a plan and pricing.
             </p>
           </motion.div>
         ) : (
           <motion.form
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.15 }}
             onSubmit={handleSubmit}
-            className="glass rounded-3xl p-10 md:p-14"
+            className="panel p-8 md:p-12"
           >
             <div className="grid md:grid-cols-2 gap-5 mb-5">
-              {[
-                {
-                  key: "name",
-                  label: "YOUR NAME",
-                  placeholder: "John Doe",
-                  type: "text",
-                },
-                {
-                  key: "email",
-                  label: "YOUR EMAIL",
-                  placeholder: "john@example.com",
-                  type: "email",
-                },
-              ].map((field) => (
-                <div key={field.key}>
-                  <label
-                className="block text-[11px] tracking-[0.3em] font-semibold mb-2"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  color: "#d8ccff",
-                  textShadow: "0 1px 4px rgba(0,0,0,0.9)",
-                }}
-                  >
-                    {field.label}
-                  </label>
-                  <input
-                    type={field.type}
-                    value={form[field.key as keyof typeof form]}
-                    onChange={(e) =>
-                      setForm({ ...form, [field.key]: e.target.value })
-                    }
-                    placeholder={field.placeholder}
-                    className="w-full px-4 py-3.5 rounded-xl text-white text-[15px]
-                      transition-all duration-300 outline-none focus:border-purple-400
-                      placeholder:text-slate-500"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      background: "rgba(0,0,8,0.75)",
-                      border: "1px solid rgba(168,85,247,0.3)",
-                      textShadow: "none",
-                    }}
-                    required
-                  />
-                </div>
-              ))}
+              <div>
+                {fieldLabel("YOUR NAME")}
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="John Doe"
+                  className="field"
+                  style={{ fontFamily: "var(--font-body)" }}
+                  required
+                />
+              </div>
+              <div>
+                {fieldLabel("YOUR EMAIL")}
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="john@company.com"
+                  className="field"
+                  style={{ fontFamily: "var(--font-body)" }}
+                  required
+                />
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-5 mb-5">
               <div>
-                <label
-                    className="block text-[11px] tracking-[0.3em] font-semibold mb-2"
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      color: "#d8ccff",
-                      textShadow: "0 1px 4px rgba(0,0,0,0.9)",
-                    }}
-                  >
-                    PROJECT TYPE
-                </label>
+                {fieldLabel("PROJECT TYPE")}
                 <select
                   value={form.project}
                   onChange={(e) =>
                     setForm({ ...form, project: e.target.value })
                   }
-                  className="w-full px-4 py-3.5 rounded-xl text-[15px]
-                    transition-all duration-300 outline-none appearance-none cursor-pointer"
+                  className="field cursor-pointer"
                   style={{
                     fontFamily: "var(--font-body)",
-                    background: "rgba(0,0,8,0.75)",
-                    border: "1px solid rgba(168,85,247,0.3)",
-                    color: form.project ? "white" : "#94a3b8",
+                    color: form.project ? "var(--text)" : "var(--faint)",
                   }}
+                  required
                 >
-                  <option value="" style={{ background: "#03000f" }}>
-                    Select type
-                  </option>
-                  <option value="website" style={{ background: "#03000f" }}>
-                    Website
-                  </option>
-                  <option value="webapp" style={{ background: "#03000f" }}>
-                    Web Application
-                  </option>
-                  <option value="mobile" style={{ background: "#03000f" }}>
-                    Mobile App
-                  </option>
-                  <option value="bot" style={{ background: "#03000f" }}>
-                    Trading Bot
-                  </option>
-                  <option value="other" style={{ background: "#03000f" }}>
-                    Other
-                  </option>
+                  <option value="">Select type</option>
+                  <option value="website">Website</option>
+                  <option value="webapp">Web Application</option>
+                  <option value="mobile">Mobile App</option>
+                  <option value="bot">Trading Bot</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
               <div>
-                <label
-                  className="block text-[11px] tracking-[0.3em] font-semibold mb-2"
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    color: "#d8ccff",
-                    textShadow: "0 1px 4px rgba(0,0,0,0.9)",
-                  }}
-                >
-                  BUDGET RANGE
-                </label>
+                {fieldLabel("BUDGET RANGE")}
                 <select
                   value={form.budget}
                   onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                  className="w-full px-4 py-3.5 rounded-xl text-[15px]
-                    transition-all duration-300 outline-none appearance-none cursor-pointer"
+                  className="field cursor-pointer"
                   style={{
                     fontFamily: "var(--font-body)",
-                    background: "rgba(0,0,8,0.75)",
-                    border: "1px solid rgba(168,85,247,0.3)",
-                    color: form.budget ? "white" : "#94a3b8",
+                    color: form.budget ? "var(--text)" : "var(--faint)",
                   }}
+                  required
                 >
-                  <option value="" style={{ background: "#03000f" }}>
-                    Select budget
-                  </option>
-                  <option value="<1k" style={{ background: "#03000f" }}>
-                    Under $1,000
-                  </option>
-                  <option value="1-3k" style={{ background: "#03000f" }}>
-                    $1,000 - $3,000
-                  </option>
-                  <option value="3-5k" style={{ background: "#03000f" }}>
-                    $3,000 - $5,000
-                  </option>
-                  <option value="5-10k" style={{ background: "#03000f" }}>
-                    $5,000 - $10,000
-                  </option>
-                  <option value="10k+" style={{ background: "#03000f" }}>
-                    $10,000+
-                  </option>
+                  <option value="">Select budget</option>
+                  <option value="<1k">Under $1,000</option>
+                  <option value="1-3k">$1,000 - $3,000</option>
+                  <option value="3-5k">$3,000 - $5,000</option>
+                  <option value="5-10k">$5,000 - $10,000</option>
+                  <option value="10k+">$10,000+</option>
                 </select>
               </div>
             </div>
 
             <div className="mb-8">
-              <label
-                className="block text-[11px] tracking-[0.3em] font-semibold mb-2"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  color: "#d8ccff",
-                  textShadow: "0 1px 4px rgba(0,0,0,0.9)",
-                }}
-              >
-                YOUR MESSAGE
-              </label>
+              {fieldLabel("PROJECT DETAILS")}
               <textarea
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                placeholder="Describe your project, goals, and vision..."
+                placeholder="What are you building? Goals, timeline, links to references…"
                 rows={5}
-                className="w-full px-4 py-3.5 rounded-xl text-white text-[15px]
-                  transition-all duration-300 outline-none resize-none
-                  placeholder:text-slate-500"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  background: "rgba(0,0,8,0.75)",
-                  border: "1px solid rgba(168,85,247,0.3)",
-                }}
+                className="field resize-none"
+                style={{ fontFamily: "var(--font-body)" }}
                 required
               />
             </div>
@@ -264,43 +180,17 @@ export default function Contact() {
             <button
               type="submit"
               disabled={sending}
-              className="w-full py-4 rounded-xl text-white font-bold tracking-widest
-                transition-all duration-500 hover:scale-[1.02] disabled:opacity-60
-                flex items-center justify-center gap-3 relative overflow-hidden group"
-              style={{
-                fontFamily: "var(--font-display)",
-                background: "linear-gradient(135deg, #7c3aed, #a855f7)",
-                boxShadow: "0 0 40px rgba(124,58,237,0.3)",
-              }}
+              className="btn-primary w-full py-4 text-sm tracking-[0.15em] disabled:opacity-60"
+              style={{ fontFamily: "var(--font-mono)" }}
             >
-              {/* Shine effect */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100
-                  transition-opacity duration-500"
-                style={{
-                  background:
-                    "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
-                }}
-              />
-
-              {sending ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  TRANSMITTING...
-                </>
-              ) : (
-                <>
-                  <span>SEND INTO THE VOID</span>
-                  <span className="text-lg">🌌</span>
-                </>
-              )}
+              {sending ? "SENDING…" : "SEND MESSAGE"}
             </button>
 
             <p
-              className="text-center text-[13px] card-text-dim mt-4"
-              style={{ fontFamily: "var(--font-mono)" }}
+              className="mt-4 text-center text-[13px]"
+              style={{ fontFamily: "var(--font-mono)", color: "var(--faint)" }}
             >
-              Response within 24 hours • No commitment required
+              Response within 24 hours — no commitment required
             </p>
           </motion.form>
         )}

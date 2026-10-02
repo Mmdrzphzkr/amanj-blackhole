@@ -40,13 +40,13 @@ function PostFX({ scrollProgress }: { scrollProgress: number }) {
   return (
     <EffectComposer multisampling={0}>
       <Bloom
-        intensity={(0.8 + scrollProgress * 0.3) * (1.0 - insideFade)}
-        luminanceThreshold={0.2}
-        luminanceSmoothing={0.9}
+        intensity={(0.35 + scrollProgress * 0.15) * (1.0 - insideFade)}
+        luminanceThreshold={0.55}
+        luminanceSmoothing={0.85}
       />
       <Vignette
-        offset={0.3}
-        darkness={0.5 + scrollProgress * 0.15}
+        offset={0.28}
+        darkness={0.62 + scrollProgress * 0.12}
         blendFunction={BlendFunction.NORMAL}
       />
     </EffectComposer>
@@ -87,7 +87,7 @@ export default function Scene({ scrollProgress }: { scrollProgress: number }) {
           alpha: false,
           powerPreference: "high-performance",
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.1,
+          toneMappingExposure: 0.95,
         }}
         style={{ background: "#000005" }}
       >

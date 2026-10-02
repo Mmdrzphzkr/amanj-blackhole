@@ -1,173 +1,115 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { SKILLS } from "@/lib/Constants";
 
 export default function Skills() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [hovered, setHovered] = useState<string | null>(null);
-
   const categories = Array.from(new Set(SKILLS.map((s) => s.category)));
 
   return (
     <section id="skills" className="section-container relative z-10" ref={ref}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto w-full">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          className="mb-16 flex flex-col items-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="section-head center items-center"
         >
-          <div
-            className="label-badge mb-4"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            [ 002 ] — ELEMENTS
-          </div>
-          <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
-            style={{
-              fontFamily: "var(--font-display)",
-            }}
-          >
-            TECH
+          <span className="eyebrow" style={{ fontFamily: "var(--font-mono)" }}>
+            002 — WHAT I USE
+          </span>
+          <h2>
+            Tech arsenal,
             <br />
-            ARSENAL
+            production-ready.
           </h2>
+          <div className="section-rule" />
+          <p>
+            The stack I use daily for client work. Hover any skill to see
+            proficiency — grouped by discipline below.
+          </p>
         </motion.div>
 
-        {/* Orbital Skill Display */}
-        <div className="relative">
-          {/* Center point */}
-          <div className="flex flex-wrap gap-4 justify-center">
+        <div className="panel p-8 md:p-10">
+          <div className="flex flex-wrap gap-3 justify-center">
             {SKILLS.map((skill, i) => (
               <motion.div
                 key={skill.name}
-                initial={{ opacity: 0, scale: 0, rotate: -20 }}
-                animate={inView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-                transition={{
-                  duration: 0.6,
-                  delay: i * 0.06,
-                  type: "spring",
-                  stiffness: 200,
-                }}
-                onMouseEnter={() => setHovered(skill.name)}
-                onMouseLeave={() => setHovered(null)}
-                className="relative group cursor-pointer"
+                initial={{ opacity: 0, y: 12 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: i * 0.04 }}
+                className="chip group"
+                style={{ fontFamily: "var(--font-mono)" }}
+                title={`${skill.name} — ${skill.level}%`}
               >
-                <div
-                  className="relative px-5 py-3 rounded-full transition-all duration-500"
-                  style={{
-                    background:
-                      hovered === skill.name
-                        ? `${skill.color}25`
-                        : "rgba(3,0,15,0.82)",
-                    border: `1px solid ${
-                      hovered === skill.name
-                        ? skill.color
-                        : "rgba(168,85,247,0.3)"
-                    }`,
-                    boxShadow:
-                      hovered === skill.name
-                        ? `0 0 30px ${skill.color}30, 0 0 60px ${skill.color}10`
-                        : "0 4px 20px rgba(0,0,0,0.6)",
-                    transform:
-                      hovered === skill.name ? "scale(1.1)" : "scale(1)",
-                    backdropFilter: "blur(12px)",
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ background: skill.color }}
-                    />
-                    <span
-                      className="text-sm font-medium"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        color: hovered === skill.name ? "#ffffff" : "#dbe2f0",
-                        textShadow: "0 1px 6px rgba(0,0,0,0.9)",
-                      }}
-                    >
-                      {skill.name}
-                    </span>
-                    {hovered === skill.name && (
-                      <span
-                        className="text-xs"
-                        style={{
-                          color: skill.color,
-                          fontFamily: "var(--font-mono)",
-                        }}
-                      >
-                        {skill.level}%
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Skill bar on hover */}
-                  {hovered === skill.name && (
-                    <motion.div
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      className="absolute bottom-0 left-0 h-px rounded-full"
-                      style={{
-                        width: `${skill.level}%`,
-                        background: skill.color,
-                        transformOrigin: "left",
-                      }}
-                    />
-                  )}
-                </div>
+                <span
+                  className="mr-2 inline-block h-1.5 w-1.5 rounded-full"
+                  style={{ background: "var(--accent)" }}
+                />
+                <span style={{ color: "var(--text)" }}>{skill.name}</span>
+                <span className="ml-2" style={{ color: "var(--faint)" }}>
+                  {skill.level}%
+                </span>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Category summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-4"
-        >
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
           {categories.map((cat, i) => {
             const catSkills = SKILLS.filter((s) => s.category === cat);
             const avgLevel =
               catSkills.reduce((a, b) => a + b.level, 0) / catSkills.length;
 
             return (
-              <div key={cat} className="glass rounded-xl p-6">
+              <motion.div
+                key={cat}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.3 + i * 0.06 }}
+                className="panel p-6"
+              >
                 <div
-                  className="text-[11px] tracking-[0.3em] mb-2 font-semibold"
+                  className="text-[11px] tracking-[0.25em] font-semibold"
                   style={{
                     fontFamily: "var(--font-mono)",
-                    color: "#c4b5fd",
-                    textShadow: "0 1px 4px rgba(0,0,0,0.9)",
+                    color: "var(--accent)",
                   }}
                 >
                   {cat.toUpperCase()}
                 </div>
                 <div
-                  className="text-2xl font-bold text-white mb-2 text-display-shadow"
-                  style={{ fontFamily: "var(--font-display)" }}
+                  className="mt-2 text-2xl font-bold"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    color: "var(--text)",
+                  }}
                 >
                   {Math.round(avgLevel)}%
                 </div>
-                <div className="h-px bg-purple-900/30 rounded-full overflow-hidden">
+                <div
+                  className="mt-3 h-1.5 rounded-full overflow-hidden"
+                  style={{ background: "var(--surface-2)" }}
+                >
                   <motion.div
                     initial={{ width: 0 }}
                     animate={inView ? { width: `${avgLevel}%` } : {}}
-                    transition={{ duration: 1.5, delay: 0.5 + i * 0.1 }}
+                    transition={{ duration: 1.2, delay: 0.4 + i * 0.08 }}
                     className="h-full rounded-full"
-                    style={{
-                      background: `linear-gradient(90deg, #7c3aed, ${catSkills[0]?.color})`,
-                    }}
+                    style={{ background: "var(--accent)" }}
                   />
                 </div>
-              </div>
+                <div
+                  className="mt-2 text-[13px]"
+                  style={{ color: "var(--faint)" }}
+                >
+                  {catSkills.length} skills
+                </div>
+              </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

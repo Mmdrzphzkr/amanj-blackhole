@@ -1,12 +1,11 @@
 "use client";
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { PROJECTS } from "@/lib/Constants";
 
 export default function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [selected, setSelected] = useState<number | null>(null);
 
   return (
     <section
@@ -14,170 +13,86 @@ export default function Projects() {
       className="section-container relative z-10"
       ref={ref}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto w-full">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          className="mb-20 flex flex-col items-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="section-head center items-center"
         >
-          <div
-            className="label-badge mb-4"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            [ 004 ] — GALAXIES
-          </div>
-          <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
-            style={{
-              fontFamily: "var(--font-display)",
-            }}
-          >
-            FEATURED
+          <span className="eyebrow" style={{ fontFamily: "var(--font-mono)" }}>
+            004 — SELECTED WORK
+          </span>
+          <h2>
+            Work that pays
             <br />
-            WORK
+            for itself.
           </h2>
+          <div className="section-rule" />
+          <p>
+            A sample of e-commerce, SaaS, trading and platform builds.
+            Every project below shipped to real users.
+          </p>
         </motion.div>
 
-        {/* Project Grid - Magazine Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {PROJECTS.map((project, i) => (
-            <motion.div
+            <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 60 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
-              onClick={() =>
-                setSelected(selected === project.id ? null : project.id)
-              }
-              className={`relative rounded-2xl overflow-hidden cursor-pointer group
-                transition-all duration-700 ${
-                  i === 0 || i === 3 ? "md:row-span-2" : ""
-                }`}
-              style={{
-                minHeight: i === 0 || i === 3 ? "480px" : "220px",
-              }}
+              transition={{ duration: 0.6, delay: (i % 3) * 0.1 }}
+              className="panel p-8 flex flex-col"
             >
-              {/* Background */}
-              <div
-                className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700"
-                style={{
-                  background: `radial-gradient(ellipse at center, ${project.color}, transparent)`,
-                }}
-              />
-
-              {/* Border */}
-              <div
-                className="absolute inset-0 rounded-2xl transition-all duration-500"
-                style={{
-                  border: `1px solid ${project.color}20`,
-                  ...(selected === project.id && {
-                    border: `1px solid ${project.color}60`,
-                    boxShadow: `0 0 40px ${project.color}20`,
-                  }),
-                }}
-              />
-
-              {/* Glass bg */}
-              <div className="absolute inset-0 glass rounded-2xl" />
-
-              {/* Content */}
-              <div className="relative z-10 p-8 h-full flex flex-col justify-between">
-                <div>
-                  <div className="flex items-start justify-between mb-4">
-                    <div
-                      className="text-[10px] tracking-[0.4em]"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        color: project.color,
-                      }}
-                    >
-                      {project.category}
-                    </div>
-                    <div
-                      className="text-[10px] text-slate-400"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        background: "rgba(0,0,5,0.6)",
-                        padding: "0.2rem 0.6rem",
-                        borderRadius: "9999px",
-                      }}
-                    >
-                      {project.year}
-                    </div>
-                  </div>
-
-                  <h3
-                    className="text-xl font-bold text-white mb-3
-                      transition-all duration-300 text-display-shadow"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {project.title}
-                  </h3>
-
-                  <AnimatePresence>
-                    {(selected === project.id || i === 0 || i === 3) && (
-                      <motion.p
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="text-[15px] card-text leading-relaxed mb-4"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
-                        {project.desc}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <div>
-                  {/* Tech stack */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-[10px] px-2.5 py-1.5 rounded-full font-medium"
-                        style={{
-                          fontFamily: "var(--font-mono)",
-                          background: "rgba(0,0,5,0.7)",
-                          color: "#e8edf7",
-                          border: `1px solid ${project.color}50`,
-                          textShadow: "0 1px 4px rgba(0,0,0,0.9)",
-                        }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+              <div className="flex items-center justify-between gap-3">
+                <span
+                  className="text-[11px] tracking-[0.22em] font-semibold"
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    color: "var(--accent)",
+                  }}
+                >
+                  {project.category.toUpperCase()}
+                </span>
+                <span
+                  className="text-[12px]"
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    color: "var(--faint)",
+                  }}
+                >
+                  {project.year}
+                </span>
               </div>
 
-              {/* Hover particle effect */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 
-                  transition-opacity duration-700 pointer-events-none"
+              <h3
+                className="mt-4 text-[1.35rem] font-bold leading-snug"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color: "var(--text)",
+                }}
               >
-                {[...Array(6)].map((_, j) => (
-                  <motion.div
-                    key={j}
-                    className="absolute w-1 h-1 rounded-full"
-                    style={{
-                      background: project.color,
-                      left: `${20 + j * 15}%`,
-                      top: `${30 + (j % 3) * 20}%`,
-                    }}
-                    animate={{
-                      y: [-5, -20, -5],
-                      opacity: [0, 1, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: j * 0.3,
-                    }}
-                  />
+                {project.title}
+              </h3>
+
+              <p
+                className="mt-3 text-[15.5px] leading-relaxed flex-1"
+                style={{ color: "var(--muted)" }}
+              >
+                {project.desc}
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {project.tech.map((tech) => (
+                  <span
+                    key={tech}
+                    className="chip"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                  >
+                    {tech}
+                  </span>
                 ))}
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

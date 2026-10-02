@@ -21,6 +21,24 @@ const TECH = [
   { name: "AWS", category: "Cloud" },
 ];
 
+const CREW = [
+  {
+    role: "Lead Developer",
+    name: "Amanj",
+    skills: "React · .NET · Python · Trading",
+  },
+  {
+    role: "Full-Stack Developer",
+    name: "Developer",
+    skills: "React · Backend · APIs",
+  },
+  {
+    role: "UI/UX Designer",
+    name: "Designer",
+    skills: "Figma · Branding · Motion",
+  },
+];
+
 export default function TechStack() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -31,157 +49,104 @@ export default function TechStack() {
       className="section-container relative z-10"
       ref={ref}
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto w-full">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          className="mb-20 flex flex-col items-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="section-head center items-center"
         >
-          <div
-            className="label-badge mb-4"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            [ 006 ] — ARSENAL
-          </div>
-          <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
-            style={{
-              fontFamily: "var(--font-display)",
-            }}
-          >
-            TECH
+          <span className="eyebrow" style={{ fontFamily: "var(--font-mono)" }}>
+            006 — STACK & CREW
+          </span>
+          <h2>
+            Lean stack.
             <br />
-            STACK
+            Senior crew.
           </h2>
+          <div className="section-rule" />
+          <p>
+            Boring technology where it counts, modern where it matters.
+            A small team means you always talk to the person writing
+            the code.
+          </p>
         </motion.div>
 
-        {/* Scrolling ticker rows */}
-        <div className="space-y-4 overflow-hidden">
-          {[TECH.slice(0, 8), TECH.slice(8)].map((row, rowIdx) => (
-            <div key={rowIdx} className="relative">
-              <motion.div
-                className="flex gap-4"
-                animate={{
-                  x: rowIdx % 2 === 0 ? ["0%", "-50%"] : ["-50%", "0%"],
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                style={{ width: "200%" }}
-              >
-                {[...row, ...row].map((tech, i) => (
-                  <div
-                    key={`${tech.name}-${i}`}
-                    className="flex-shrink-0 glass rounded-xl px-8 py-4 flex items-center
-                      gap-3 hover:border-purple-500/40 transition-all duration-300 group"
-                  >
-                    <div
-                      className="w-1.5 h-1.5 rounded-full bg-purple-500 
-                      group-hover:bg-yellow-400 transition-colors"
-                    />
-                    <span
-                      className="text-sm font-semibold whitespace-nowrap
-                        text-white transition-colors"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        textShadow: "0 1px 6px rgba(0,0,0,0.9)",
-                      }}
-                    >
-                      {tech.name}
-                    </span>
-                    <span
-                      className="text-xs whitespace-nowrap card-text-dim"
-                      style={{ fontFamily: "var(--font-body)" }}
-                    >
-                      {tech.category}
-                    </span>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          ))}
-        </div>
-
-        {/* Team section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.4 }}
-          className="mt-20 flex flex-col items-center"
-        >
-          <div
-            className="label-badge mb-8"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            THE CREW
-          </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              {
-                role: "Lead Developer",
-                name: "You",
-                skills: "React · .NET · Python · Trading",
-                color: "#7c3aed",
-              },
-              {
-                role: "Full-Stack Developer",
-                name: "Developer",
-                skills: "React · Backend · APIs",
-                color: "#06b6d4",
-              },
-              {
-                role: "UI/UX Designer",
-                name: "Designer",
-                skills: "Figma · Branding · Motion",
-                color: "#f59e0b",
-              },
-            ].map((member) => (
-              <div
-                key={member.role}
-                className="glass rounded-2xl p-8 text-center group hover:scale-105
-                  transition-all duration-500"
-                style={{ borderColor: `${member.color}20` }}
-              >
-                <div
-                  className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center
-                    justify-center text-2xl"
-                  style={{
-                    background: `radial-gradient(circle, ${member.color}30, transparent)`,
-                    border: `1px solid ${member.color}30`,
-                  }}
-                >
-                  {member.role.includes("Lead")
-                    ? "🚀"
-                    : member.role.includes("Design")
-                      ? "🎨"
-                      : "⚡"}
-                </div>
-                <div
-                  className="text-[10px] tracking-[0.3em] mb-2"
+        <div className="panel p-8 md:p-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-5">
+            {TECH.map((tech) => (
+              <div key={tech.name} className="flex flex-col">
+                <span
+                  className="text-[15px] font-semibold"
                   style={{
                     fontFamily: "var(--font-mono)",
-                    color: member.color,
+                    color: "var(--text)",
                   }}
                 >
-                  {member.role.toUpperCase()}
-                </div>
-                <div
-                  className="text-white font-semibold mb-2 text-display-shadow"
-                  style={{ fontFamily: "var(--font-display)" }}
+                  {tech.name}
+                </span>
+                <span
+                  className="mt-0.5 text-[13px]"
+                  style={{ color: "var(--faint)" }}
                 >
-                  {member.name}
-                </div>
-                <div
-                  className="text-xs card-text-dim"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {member.skills}
-                </div>
+                  {tech.category}
+                </span>
               </div>
             ))}
           </div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.25 }}
+          className="mt-6 grid md:grid-cols-3 gap-4"
+        >
+          {CREW.map((member) => (
+            <div key={member.role} className="panel p-8 text-center">
+              <div
+                className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full text-[11px] font-bold tracking-widest"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  background: "var(--surface-2)",
+                  border: "1px solid var(--line)",
+                  color: "var(--accent)",
+                }}
+              >
+                {member.role
+                  .split(" ")
+                  .map((w) => w[0])
+                  .slice(0, 2)
+                  .join("")}
+              </div>
+              <div
+                className="text-[11px] tracking-[0.25em] font-semibold"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  color: "var(--accent)",
+                }}
+              >
+                {member.role.toUpperCase()}
+              </div>
+              <div
+                className="mt-2 font-bold"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color: "var(--text)",
+                }}
+              >
+                {member.name}
+              </div>
+              <div
+                className="mt-1 text-[13px]"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  color: "var(--muted)",
+                }}
+              >
+                {member.skills}
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

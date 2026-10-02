@@ -249,7 +249,7 @@ const fragmentShader = `
           float hitAngle = atan(hitPos.z, hitPos.x);
           vec4 diskResult = accretionDiskColor(
             hitR, hitAngle, uTime, rayDir,
-            innerR, outerR, 30.0, 1.0, 3.0
+            innerR, outerR, 13.0, 1.0, 1.35
           );
 
           float remainingAlpha = 1.0 - alpha;
@@ -266,10 +266,10 @@ const fragmentShader = `
       float distFromPhotonSphere = abs(minDist - photonSphereR);
 
       float ring1 = 1.0 - smoothstep(0.0, 0.15, distFromPhotonSphere);
-      vec3 ringColor1 = vec3(1.0, 0.92, 0.75) * pow(ring1, 3.0) * 4.0;
+      vec3 ringColor1 = vec3(0.62, 0.52, 1.0) * pow(ring1, 3.0) * 1.6;
 
       float ring2 = 1.0 - smoothstep(0.0, 0.35, distFromPhotonSphere);
-      vec3 ringColor2 = vec3(0.9, 0.7, 0.4) * pow(ring2, 5.0) * 1.5;
+      vec3 ringColor2 = vec3(0.42, 0.32, 0.9) * pow(ring2, 5.0) * 0.7;
 
       vec3 ringGlow = ringColor1 + ringColor2;
       color += ringGlow * (1.0 - alpha);

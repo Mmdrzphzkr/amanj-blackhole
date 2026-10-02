@@ -13,91 +13,73 @@ export default function Services() {
       className="section-container relative z-10"
       ref={ref}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto w-full">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          className="mb-20 flex flex-col items-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="section-head center items-center"
         >
-          <div
-            className="label-badge mb-4"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            [ 005 ] — FORCES
-          </div>
-          <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
-            style={{
-              fontFamily: "var(--font-display)",
-            }}
-          >
-            WHAT WE
+          <span className="eyebrow" style={{ fontFamily: "var(--font-mono)" }}>
+            005 — SERVICES
+          </span>
+          <h2>
+            What we build
             <br />
-            BUILD
+            for clients.
           </h2>
+          <div className="section-rule" />
+          <p>
+            Fixed scope, clear timelines, maintainable code. Pick one
+            service or combine them into a full product.
+          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {SERVICES.map((service, i) => (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="glass rounded-2xl p-8 group relative overflow-hidden cursor-pointer"
+              transition={{ duration: 0.6, delay: (i % 3) * 0.1 }}
+              className="panel p-8"
             >
-              {/* Glow on hover */}
               <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 
-                  transition-opacity duration-700 rounded-2xl"
+                className="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
                 style={{
-                  background: `radial-gradient(ellipse at top left, ${service.color}08, transparent)`,
+                  background: "var(--surface-2)",
+                  border: "1px solid var(--line)",
                 }}
-              />
-
-              <div className="relative z-10">
-                <div className="text-4xl mb-5">{service.icon}</div>
-
-                <h3
-                  className="text-lg font-bold text-white mb-3 transition-all duration-300 text-display-shadow"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {service.title}
-                </h3>
-
-                <p
-                  className="text-[15px] card-text leading-relaxed mb-5"
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  {service.desc}
-                </p>
-
-                <div className="flex items-center gap-2">
-                  <div
-                    className="h-px flex-1 transition-all duration-500 group-hover:flex-none"
-                    style={{
-                      background: `linear-gradient(90deg, ${service.color}, transparent)`,
-                    }}
-                  />
-                  <span
-                    className="text-[10px] tracking-widest transition-colors duration-300"
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      color: service.color,
-                    }}
-                  >
-                    EXPLORE
-                  </span>
-                </div>
+              >
+                {service.icon}
               </div>
-
-              {/* Corner accent */}
+              <h3
+                className="mt-5 text-lg font-bold"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color: "var(--text)",
+                }}
+              >
+                {service.title}
+              </h3>
+              <p
+                className="mt-3 text-[15.5px] leading-relaxed"
+                style={{ color: "var(--muted)" }}
+              >
+                {service.desc}
+              </p>
               <div
-                className="absolute bottom-0 right-0 w-24 h-24 opacity-0 
-                  group-hover:opacity-5 transition-opacity duration-700 rounded-tl-full"
-                style={{ background: service.color }}
-              />
+                className="mt-6 flex items-center gap-3 text-[12px] tracking-[0.2em] font-semibold"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  color: "var(--accent)",
+                }}
+              >
+                <span
+                  className="h-px flex-1"
+                  style={{ background: "var(--line)" }}
+                />
+                INCLUDED IN QUOTE
+              </div>
             </motion.div>
           ))}
         </div>

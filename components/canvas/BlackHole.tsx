@@ -26,11 +26,11 @@ const photonRingFragment = `
     float pulse = sin(uTime * 1.5) * 0.1 + 0.9;
     float shimmer = sin(uTime * 4.0 + vNormal.x * 10.0) * 0.15 + 0.85;
 
-    vec3 innerColor = vec3(1.0, 0.85, 0.5);
-    vec3 outerColor = vec3(0.8, 0.4, 1.0);
-    vec3 color = mix(innerColor, outerColor, fresnel) * pulse * shimmer;
+    vec3 innerColor = vec3(0.62, 0.55, 1.0);
+    vec3 outerColor = vec3(0.45, 0.35, 0.95);
+    vec3 color = mix(innerColor, outerColor, fresnel) * pulse * shimmer * 0.8;
 
-    float alpha = fresnel * 0.35;
+    float alpha = fresnel * 0.28;
 
     gl_FragColor = vec4(color, alpha);
   }

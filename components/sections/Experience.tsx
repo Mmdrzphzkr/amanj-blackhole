@@ -13,128 +13,96 @@ export default function Experience() {
       className="section-container relative z-10"
       ref={ref}
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto w-full">
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1 } : {}}
-          className="mb-20 flex flex-col items-center"
+          className="section-head center items-center"
         >
-          <div
-            className="label-badge mb-4"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            [ 003 ] — TIMELINE
-          </div>
-          <h2
-            className="text-5xl md:text-7xl font-black text-center leading-none title-solid"
-            style={{
-              fontFamily: "var(--font-display)",
-            }}
-          >
-            THROUGH
+          <span className="eyebrow" style={{ fontFamily: "var(--font-mono)" }}>
+            003 — TRACK RECORD
+          </span>
+          <h2>
+            Experience that
             <br />
-            TIME
+            compounds.
           </h2>
+          <div className="section-rule" />
+          <p>
+            From enterprise systems to freelance delivery to running a
+            product team — each step made the next one faster.
+          </p>
         </motion.div>
 
-        {/* Cosmic Timeline */}
         <div className="relative">
-          {/* Timeline spine */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden md:block">
-            <div
-              className="w-full h-full"
-              style={{
-                background:
-                  "linear-gradient(180deg, transparent, #7c3aed, #f59e0b, #06b6d4, transparent)",
-              }}
-            />
-          </div>
-
-          <div className="space-y-16">
+          <div
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px md:-translate-x-1/2"
+            style={{ background: "var(--line)" }}
+          />
+          <div className="space-y-6">
             {EXPERIENCE.map((exp, i) => (
               <motion.div
                 key={exp.company}
-                initial={{ opacity: 0, y: 60 }}
+                initial={{ opacity: 0, y: 32 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: i * 0.2 }}
-                className={`relative grid md:grid-cols-2 gap-8 md:gap-16 ${
-                  i % 2 === 0 ? "" : "md:direction-rtl"
+                transition={{ duration: 0.6, delay: i * 0.12 }}
+                className={`relative grid md:grid-cols-2 gap-6 ${
+                  i % 2 === 0 ? "" : ""
                 }`}
               >
-                {/* Timeline node */}
-                <div className="absolute left-1/2 top-8 -translate-x-1/2 hidden md:block">
-                  <motion.div
-                    animate={{ scale: [1, 1.3, 1] }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      delay: i * 0.5,
-                    }}
-                    className="w-4 h-4 rounded-full"
-                    style={{
-                      background: exp.color,
-                      boxShadow: `0 0 20px ${exp.color}60`,
-                    }}
-                  />
-                </div>
-
-                {/* Content */}
+                <div
+                  className={`hidden md:block absolute left-1/2 top-10 -translate-x-1/2 h-3 w-3 rounded-full ${
+                    i % 2 === 0 ? "" : ""
+                  }`}
+                  style={{
+                    background: "var(--accent)",
+                    border: "3px solid var(--bg)",
+                  }}
+                />
                 <div
                   className={
                     i % 2 === 0
-                      ? "md:text-right md:pr-12"
-                      : "md:col-start-2 md:pl-12"
+                      ? "md:pr-12 md:text-right pl-12 md:pl-0"
+                      : "md:col-start-2 md:pl-12 pl-12"
                   }
                 >
-                  <div
-                    className="glass rounded-2xl p-8 group hover:scale-[1.02]
-                      transition-all duration-500 relative overflow-hidden"
-                    style={{ borderColor: `${exp.color}20` }}
-                  >
+                  <div className="panel-accent-top p-8 text-left">
                     <div
-                      className="text-[10px] tracking-[0.4em] mb-3"
+                      className="text-[11px] tracking-[0.25em] font-semibold"
                       style={{
                         fontFamily: "var(--font-mono)",
-                        color: exp.color,
+                        color: "var(--accent)",
                       }}
                     >
-                      {exp.year}
+                      {exp.year.toUpperCase()}
                     </div>
-
                     <h3
-                      className="text-xl font-bold text-white mb-1 text-display-shadow"
-                      style={{ fontFamily: "var(--font-display)" }}
+                      className="mt-3 text-xl font-bold"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        color: "var(--text)",
+                      }}
                     >
                       {exp.role}
                     </h3>
-
                     <div
-                      className="text-sm mb-4"
+                      className="mt-1 text-sm font-medium"
                       style={{
                         fontFamily: "var(--font-mono)",
-                        color: exp.color,
+                        color: "var(--muted)",
                       }}
                     >
                       {exp.company}
                     </div>
-
                     <p
-                      className="text-[15px] card-text leading-relaxed"
-                      style={{ fontFamily: "var(--font-body)" }}
+                      className="mt-4 text-[15.5px] leading-relaxed"
+                      style={{ color: "var(--muted)" }}
                     >
                       {exp.desc}
                     </p>
-
-                    {/* Decorative corner */}
-                    <div
-                      className="absolute top-0 right-0 w-20 h-20 rounded-tl-full opacity-5"
-                      style={{ background: exp.color }}
-                    />
                   </div>
                 </div>
-
-                {/* Empty column for alternating layout */}
-                {i % 2 === 0 && <div />}
+                {i % 2 === 0 && <div className="hidden md:block" />}
               </motion.div>
             ))}
           </div>
